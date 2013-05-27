@@ -24,10 +24,13 @@ class GuildWars2API(object):
             'api_version': api_version,
         }
 
-        self.events = Events(self.options, self.session)
-        self.event_names = EventNames(self.options, self.session)
-        self.map_names = MapNames(self.options, self.session)
-        self.world_names = WorldNames(self.options, self.session)
-        self.matches = Matches(self.options, self.session)
-        self.match_details = MatchDetails(self.options, self.session)
-        self.objective_names = ObjectiveNames(self.options, self.session)
+        self.events = self._prepare(Events)
+        self.event_names = self._prepare(EventNames)
+        self.map_names = self._prepare(MapNames)
+        self.world_names = self._prepare(WorldNames)
+        self.matches = self._prepare(Matches)
+        self.match_details = self._prepare(MatchDetails)
+        self.objective_names = self._prepare(ObjectiveNames)
+
+    def _prepare(self, resource):
+        return resource(self.options, self.session)
