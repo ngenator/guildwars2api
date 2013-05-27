@@ -19,7 +19,7 @@ class Resource(object):
 
     `api_type` determines the relative url of the resource
     `api_class` determines the json resource being requested
-    `api_return` determines the name of the object the api is expected to return
+    `api_return` determines the name of the object the api is expected to return, if set to True, uses `api_class` value
     """
 
     api_type = None
