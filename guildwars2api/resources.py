@@ -91,6 +91,15 @@ class NameLookupMixin(object):
         return super(NameLookupMixin, self).get(lang=lang)
 
 
+class NoParamsMixin(object):
+    """
+    Mixin for resources that don't take parameters
+    """
+
+    def get(self):
+        return super(NoParamsMixin).get()
+
+
 class WvWResource(Resource):
     api_type = 'wvw'
 
@@ -122,16 +131,9 @@ class WorldNames(Resource, NameLookupMixin):
     api_class = 'world_names'
 
 
-class Matches(WvWResource):
+class Matches(WvWResource, NoParamsMixin):
     api_class = 'matches'
     api_return = 'wvw_matches'
-
-    def get(self):
-        """
-        :return: Currently running WvW matches and the world_ids in each match
-        """
-
-        return super(Matches, self).get()
 
 
 class MatchDetails(WvWResource):
@@ -150,4 +152,35 @@ class ObjectiveNames(WvWResource, NameLookupMixin):
     api_class = 'objective_names'
 
 
-# TODO: Add item/recipe API classes
+class Items(Resource, NoParamsMixin):
+    api_class = 'items'
+    api_return = True
+
+
+class ItemDetails(Resource):
+    api_class = 'item_details'
+
+    def get(self, item_id, lang=None):
+        """
+        :param item_id: The item_id to get details for
+        :param lang: The language the results will be returned in, supported languages: en, fr, de, es
+        :return: Details about the item for the given item_id
+        """
+        return super(ItemDetails, self).get(item_id=item_id, lang=lang)
+
+
+class Recipes(Resource, NoParamsMixin):
+    api_class = 'recipes'
+    api_return = True
+
+
+class RecipeDetails(Resource):
+    api_class = 'recipe_details'
+
+    def get(self, recipe_id):
+        """
+        :param recipe_id: The recipe_id to get details for
+        :return: The recipe for the given recipe_id
+        """
+        return super(RecipeDetails, self).get(recipe_id=recipe_id)
+

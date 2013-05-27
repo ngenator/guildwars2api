@@ -1,6 +1,6 @@
 import requests
 
-from guildwars2api.resources import Events, EventNames, MapNames, WorldNames, Matches, MatchDetails, ObjectiveNames
+from guildwars2api.resources import Events, EventNames, MapNames, WorldNames, Matches, MatchDetails, ObjectiveNames, Items, ItemDetails, Recipes, RecipeDetails
 
 
 class GuildWars2API(object):
@@ -31,6 +31,10 @@ class GuildWars2API(object):
         self.matches = self._prepare(Matches)
         self.match_details = self._prepare(MatchDetails)
         self.objective_names = self._prepare(ObjectiveNames)
+        self.items = self._prepare(Items)
+        self.item_details = self._prepare(ItemDetails)
+        self.recipes = self._prepare(Recipes)
+        self.recipe_details = self._prepare(RecipeDetails)
 
     def _prepare(self, resource):
         return resource(self.options, self.session)
