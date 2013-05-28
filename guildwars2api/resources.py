@@ -97,7 +97,7 @@ class NoParamsMixin(object):
     """
 
     def get(self):
-        return super(NoParamsMixin).get()
+        return super(NoParamsMixin, self).get()
 
 
 class WvWResource(Resource):
