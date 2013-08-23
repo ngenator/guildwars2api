@@ -44,7 +44,7 @@ class Resource(object):
 
     def get(self, **kwargs):
         """
-        Get the data from the API and populate the current object with the values
+        Get the data from the API and return the values
         """
 
         url = self._build_url(**kwargs)
