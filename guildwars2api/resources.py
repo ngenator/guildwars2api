@@ -54,7 +54,7 @@ class Resource(object):
 
         if self.api_return is not None and self.api_return in data:
             return data[self.api_return]
-        elif self.api_return == True:
+        elif self.api_return == True and self.api_class in data:
             return data[self.api_class]
         else:
             return data
