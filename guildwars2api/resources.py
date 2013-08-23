@@ -188,8 +188,14 @@ class RecipeDetails(Resource):
 class GuildDetails(Resource):
     api_class = 'guild_details'
 
-    def get(self, guild_name):
+    def get_by_name(self, guild_name):
         """
         :param guild_name: The name of the guild to get details for
         """
         return super(GuildDetails, self).get(guild_name=guild_name)
+
+    def get_by_id(self, guild_id):
+        """
+        :param guild_id: The id of the guild to get details for
+        """
+        return super(GuildDetails, self).get(guild_id=guild_id)
