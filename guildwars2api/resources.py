@@ -184,3 +184,12 @@ class RecipeDetails(Resource):
         """
         return super(RecipeDetails, self).get(recipe_id=recipe_id)
 
+
+class GuildDetails(Resource):
+    api_class = 'guild_details'
+
+    def get(self, guild_name):
+        """
+        :param guild_name: The name of the guild to get details for
+        """
+        return super(GuildDetails, self).get(guild_name=guild_name)
