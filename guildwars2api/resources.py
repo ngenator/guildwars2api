@@ -184,6 +184,17 @@ class Recipes(Resource, NoParamsMixin):
     api_return = True
 
 
+class RecipesV2(Resource):
+    api_class = 'recipes'
+    
+    def get(self, recipe_id=None):
+        """
+        :param recipe_id: The recipe_id to get details for
+        :return: The recipe for the given recipe_id
+        """
+        return super(RecipesV2, self).get(recipe_id=recipe_id)
+    
+    
 class RecipeDetails(Resource):
     api_class = 'recipe_details'
 
