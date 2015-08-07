@@ -1,4 +1,5 @@
 from guildwars2api.resources import Resource, NoParamsMixin, NameLookupMixin
+from math import floor
 
 # class Events(Resource):
 #     api_class = 'events'
@@ -119,8 +120,9 @@ class ObjectiveNames(WvWResource, NameLookupMixin):
 class Continents(Resource, NameLookupMixin):
     api_class = "continents"
     
+    
 class Maps(Resource):
-    api_class = "Maps"
+    api_class = "maps"
     
     def get(self, map_id=None):
         """
@@ -129,4 +131,21 @@ class Maps(Resource):
         """
         
         return super(Maps, self).get(map_id=map_id)
+    
+class Map_Floor(Resource):
+    api_class = "map_floor"
+    
+    def get(self, continent_id, floor, lang=None):
+        """
+        :param continent_id: The continent_id to get details for
+        :floor floor: The floor of the continenet to get details for
+        :param lang: The language the results will be returned in, supported languages: en, fr, de, es
+        :return: The details of the map floor.
+        """
+        
+        return super(Map_Floor, self).get(continent_id=continent_id, floor=floor, lang=lang)
+    
+
+class Build(Resource, NoParamsMixin):
+    api_class = "build"
     

@@ -44,6 +44,8 @@ class GuildWars2API(object):
             self.guild_details = self._prepare(v1.GuildDetails)
             self.continents = self._prepare(v1.Continents)
             self.maps = self._prepare(v1.Maps)
+            self.map_floor = self._prepare(v1.Map_Floor)
+            self.build = self._prepare(v1.Build)
         else:
             raise ValueError("Only v1 or v2 accepted")
     
