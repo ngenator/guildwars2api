@@ -28,6 +28,7 @@ class GuildWars2API(object):
             self.items = self._prepare(v2.Items)
             self.recipes = self._prepare(v2.Recipes)
             self.skins = self._prepare(v2.Skins)
+            self.materials = self._prepare(v2.Materials)
         elif (api_version =='v1'):
             self.items = self._prepare(v1.Items)
             self.recipes = self._prepare(v1.Recipes)

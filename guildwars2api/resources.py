@@ -3,6 +3,7 @@ import logging
 from urllib.parse import urlencode
 
 
+
 class GuildWars2APIError(Exception):
     pass
 
@@ -25,7 +26,9 @@ class Resource(object):
     api_type = None
     api_class = None
     api_return = None
-
+    url = None
+    
+    
     def __init__(self, options, session):
         """
         :param options:
@@ -42,13 +45,14 @@ class Resource(object):
         if self.api_class is None:
             raise LookupError("The `api_class` property needs to be set on %s" % self.__class__.__name__)
 
+
     def get(self, **kwargs):
         """
         Get the data from the API and return the values
         """
 
-        url = self._build_url(**kwargs)
-        r = self.session.get(url)
+        self.url = self._build_url(**kwargs)
+        r = self.session.get(self.url)
         data = r.json()
         raise_on_error(data)
 
@@ -59,6 +63,7 @@ class Resource(object):
         else:
             return data
 
+
     def _build_url(self, **kwargs):
         """
         Build the correct URL
@@ -68,7 +73,7 @@ class Resource(object):
         url_data.update({
             'api_type': '/' if self.api_type is None else '/%s/' % self.api_type,
             'api_resource': self.api_class,
-            'api_parameters': urlencode(kwargs),
+            'api_parameters': urlencode(kwargs, safe=","),
         })
 
         url = "%(api_server)s/%(api_version)s%(api_type)s%(api_resource)s.json?%(api_parameters)s" % url_data
@@ -98,3 +103,17 @@ class NoParamsMixin(object):
 
     def get(self):
         return super(NoParamsMixin, self).get()
+
+class IDsLookupMixin(object):
+    """
+    Mixin for resources that can take a list of ids and the lang parameter and then returns 
+    a list of id/name mappings
+    """
+    def get(self, ids=None, lang=None):
+        """
+        :param ids: A list of ids to look up
+        :return lang: The language to return, currently supported languages: en, fr, de, es
+        """
+        
+        return super(IDsLookupMixin, self).get(ids=ids, lang=lang)
+        
