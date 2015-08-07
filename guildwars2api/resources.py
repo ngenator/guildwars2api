@@ -231,7 +231,18 @@ class Skin_Details(Resource):
     
     def get(self, skin_id):
         """
-        :param recipe_id: The skin_id to get details for
+        :param skin_id: The skin_id to get details for
         :return: The skin for the given skin_id
         """
         return super(Skin_Details, self).get(skin_id=skin_id)
+    
+class SkinsV2(Resource):
+    api_class = 'skins'
+    
+    def get(self, skin_id=None):
+        """
+        :param skin_id: The skin_id to get details for
+        :return: The skin for the given skin_id
+        """
+        return super(SkinsV2, self).get(skin_id=skin_id)
+    

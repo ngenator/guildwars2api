@@ -2,7 +2,7 @@ import requests
 
 from guildwars2api.resources import (GuildDetails, EventNames, MapNames, WorldNames, Matches, MatchDetails, 
                                      ObjectiveNames, Items, ItemDetails, Recipes, RecipeDetails, ItemsV2, 
-                                     RecipesV2, Skins, Skin_Details)
+                                     RecipesV2, Skins, Skin_Details, SkinsV2)
 
 
 class GuildWars2API(object):
@@ -29,6 +29,7 @@ class GuildWars2API(object):
         if (api_version == 'v2'):
             self.items = self._prepare(ItemsV2)
             self.recipes = self._prepare(RecipesV2)
+            self.skins = self._prepare(SkinsV2)
         elif (api_version =='v1'):
             self.items = self._prepare(Items)
             self.recipes = self._prepare(Recipes)
