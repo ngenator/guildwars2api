@@ -149,3 +149,12 @@ class Map_Floor(Resource):
 class Build(Resource, NoParamsMixin):
     api_class = "build"
     
+    
+class Colors(Resource, NameLookupMixin):
+    api_class = "colors"
+    
+
+class Files(Resource, NoParamsMixin):
+    api_class = "files"
+    
+    

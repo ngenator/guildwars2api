@@ -46,6 +46,8 @@ class GuildWars2API(object):
             self.maps = self._prepare(v1.Maps)
             self.map_floor = self._prepare(v1.Map_Floor)
             self.build = self._prepare(v1.Build)
+            self.colors = self._prepare(v1.Colors)
+            self.files = self._prepare(v1.Files)
         else:
             raise ValueError("Only v1 or v2 accepted")
     
