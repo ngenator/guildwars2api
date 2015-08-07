@@ -48,6 +48,7 @@ class GuildWars2API(object):
             self.build = self._prepare(v1.Build)
             self.colors = self._prepare(v1.Colors)
             self.files = self._prepare(v1.Files)
+            self.event_details = self._prepare(v1.EventDetails)
         else:
             raise ValueError("Only v1 or v2 accepted")
     

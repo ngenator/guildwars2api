@@ -28,6 +28,19 @@ class WorldNames(Resource, NameLookupMixin):
     api_class = 'world_names'
     
     
+class EventDetails(Resource):
+    api_class = 'event_details'
+    
+    def get(self, event_id=None, lang=None):
+        """
+        :param event_id: The event_id for the event
+        :param lang: The language the results will be returned in, supported languages: en, fr, de, es
+        :return: Static details about current event(s)
+        """
+        
+        return super(EventDetails, self).get(event_id=event_id, lang=lang)
+    
+    
 class GuildDetails(Resource):
     api_class = 'guild_details'
 
