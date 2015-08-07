@@ -220,3 +220,9 @@ class GuildDetails(Resource):
         :param guild_id: The id of the guild to get details for
         """
         return super(GuildDetails, self).get(guild_id=guild_id)
+
+
+class Skins(Resource, NoParamsMixin):
+    api_class = 'skins'
+    api_return = True
+    
