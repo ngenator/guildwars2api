@@ -94,6 +94,7 @@ class Skin_Details(Resource):
 class WvWResource(Resource):
     api_type = 'wvw'
     
+    
 class Matches(WvWResource, NoParamsMixin):
     api_class = 'matches'
     api_return = 'wvw_matches'
@@ -113,4 +114,19 @@ class MatchDetails(WvWResource):
 
 class ObjectiveNames(WvWResource, NameLookupMixin):
     api_class = 'objective_names'
+    
+    
+class Continents(Resource, NameLookupMixin):
+    api_class = "continents"
+    
+class Maps(Resource):
+    api_class = "Maps"
+    
+    def get(self, map_id=None):
+        """
+        :param map_id: The map_id to get details for
+        :return: The details of the given map
+        """
+        
+        return super(Maps, self).get(map_id=map_id)
     

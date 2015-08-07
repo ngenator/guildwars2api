@@ -32,3 +32,4 @@ class Items(Resource):
         :return: Details about the item for the given item_id
         """
         return super(Items, self).get(item_id=item_id, lang=lang)
+    

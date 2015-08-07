@@ -42,6 +42,8 @@ class GuildWars2API(object):
             self.map_names = self._prepare(v1.MapNames)
             self.world_names = self._prepare(v1.WorldNames)
             self.guild_details = self._prepare(v1.GuildDetails)
+            self.continents = self._prepare(v1.Continents)
+            self.maps = self._prepare(v1.Maps)
         else:
             raise ValueError("Only v1 or v2 accepted")
     
