@@ -80,8 +80,8 @@ class Resource(object):
         self.logger.debug('url:%s' % url)
 
         return url
-
-
+        
+        
 class NameLookupMixin(object):
     """
     Mixin for resources that only take a lang parameter and return a list of id/name mappings
@@ -112,7 +112,8 @@ class IDsLookupMixin(object):
     def get(self, ids=None, lang=None):
         """
         :param ids: A list of ids to look up
-        :return lang: The language to return, currently supported languages: en, fr, de, es
+        :param lang: The language to return, currently supported languages: en, fr, de, es
+        :return: Either returns a list of ids or detailed info of searched id
         """
         
         return super(IDsLookupMixin, self).get(ids=ids, lang=lang)
