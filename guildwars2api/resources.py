@@ -74,11 +74,11 @@ class Resource(object):
         url_data.update({
             'api_type': '/' if self.api_type is None else '/%s/' % self.api_type,
             'api_resource': self.api_class,
-            'api_subclass': '' if self.api_subclass is None else '/%s/' % self.api_subclass,
+            'api_subclass': '' if self.api_subclass is None else '/%s' % self.api_subclass,
             'api_parameters': urlencode(kwargs, safe=","),
         })
 
-        url = "%(api_server)s/%(api_version)s%(api_type)s%(api_resource)s%(api_subclass)s.json?%(api_parameters)s" % url_data
+        url = "%(api_server)s/%(api_version)s%(api_type)s%(api_resource)s%(api_subclass)s?%(api_parameters)s" % url_data
         self.logger.debug('url:%s' % url)
 
         return url

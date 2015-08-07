@@ -41,27 +41,45 @@ class Continents(Resource, IDsLookupMixin):
     api_class = 'continents'
     subresource = { "continent_id" : None, "floor_id" : None, "region_id" : None, "map_id" : None }
     
-    def get_details(self, continent_id=None, floor_id=None, region_id=None, map_id=None):
+    def get_subclass_details(self, continent_id=None, floor_id=None, region_id=None, map_id=None, detail=None, detail_id=None, id_list=False):
         """
-        Will default to none if the previous subresource is not set
+        Will default to none if the previous subresource is not set.  When id_list is set to true, then a query for
+        ids will only appear, otherwise a detailed version of the id will be searched
         :param continent_id: The continent_id you would like to get information on
         :param floor_id: The floor_id you would like to get information on
         :param region_id: The region_id you would like to get information on
         :param map_id: The map_id you would like to get information on
+        :param detail: Addtional info of the map, sectors, pois and tasks
         :return: None
         """
-        
-        self.subresource["continent_id"] = str(continent_id)
-        if continent_id:
-            self.api_subclass = self.subresource["continent_id"]
-            self.subresource["floor_id"] = str(floor_id)
-            if floor_id:
-                self.api_subclass += '/floors/' + self.subresource["floor_id"]
-                self.subresource["region_id"] = str(region_id)
-                if map_id:
-                    self.api_subclass += '/map/' + self.subresource["floor_id"]
-                    self.subresource["map_id"] = str(map_id)
-        return super(Continents, self).get()
+        if id_list:
+            if continent_id:
+                if floor_id:
+                    self.api_subclass = str(continent_id)
+                    if region_id:
+                        self.api_subclass += '/floors/' + str(floor_id)
+                        if map_id:
+                            self.api_subclass += '/regions/' + str(region_id)
+                            if (detail == "sectors" or detail == "pois" or detail == "tasks"):
+                                self.api_subclass += '/maps/' + str(map_id)
+                                if detail_id:
+                                    self.api_subclass += "/" + detail
+            return super(Continents, self).get()
+        else:
+            if continent_id:
+                self.api_subclass = str(continent_id)
+                if floor_id:
+                    self.api_subclass += '/floors/' + str(floor_id)
+                    if region_id:
+                        self.api_subclass += '/regions/' + str(region_id)
+                        if map_id:
+                            self.api_subclass += '/maps/' + str(map_id)
+                            if (detail == "sectors" or detail == "pois" or detail == "tasks"):
+                                self.api_subclass += "/" + detail
+                                if detail_id:
+                                    self.api_subclass += "/" + detail_id
+            return super(Continents, self).get()
+    
     
     def get(self, ids=None):
         self.api_subclass=None
