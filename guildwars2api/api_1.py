@@ -151,7 +151,7 @@ class Map_Floor(Resource):
     def get(self, continent_id, floor, lang=None):
         """
         :param continent_id: The continent_id to get details for
-        :floor floor: The floor of the continenet to get details for
+        :floor floor: The floor of the continent to get details for
         :param lang: The language the results will be returned in, supported languages: en, fr, de, es
         :return: The details of the map floor.
         """
