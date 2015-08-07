@@ -1,6 +1,7 @@
 import logging
 
-from urllib import urlencode
+from urllib.parse import urlencode
+
 
 
 class GuildWars2APIError(Exception):
@@ -25,7 +26,9 @@ class Resource(object):
     api_type = None
     api_class = None
     api_return = None
-
+    url = None
+    
+    
     def __init__(self, options, session):
         """
         :param options:
@@ -42,13 +45,14 @@ class Resource(object):
         if self.api_class is None:
             raise LookupError("The `api_class` property needs to be set on %s" % self.__class__.__name__)
 
+
     def get(self, **kwargs):
         """
         Get the data from the API and return the values
         """
 
-        url = self._build_url(**kwargs)
-        r = self.session.get(url)
+        self.url = self._build_url(**kwargs)
+        r = self.session.get(self.url)
         data = r.json()
         raise_on_error(data)
 
@@ -59,6 +63,7 @@ class Resource(object):
         else:
             return data
 
+
     def _build_url(self, **kwargs):
         """
         Build the correct URL
@@ -68,7 +73,7 @@ class Resource(object):
         url_data.update({
             'api_type': '/' if self.api_type is None else '/%s/' % self.api_type,
             'api_resource': self.api_class,
-            'api_parameters': urlencode(kwargs),
+            'api_parameters': urlencode(kwargs, safe=","),
         })
 
         url = "%(api_server)s/%(api_version)s%(api_type)s%(api_resource)s.json?%(api_parameters)s" % url_data
@@ -99,103 +104,16 @@ class NoParamsMixin(object):
     def get(self):
         return super(NoParamsMixin, self).get()
 
-
-class WvWResource(Resource):
-    api_type = 'wvw'
-
-
-class Events(Resource):
-    api_class = 'events'
-    api_return = True
-
-    def get(self, world_id=None, map_id=None, event_id=None):
+class IDsLookupMixin(object):
+    """
+    Mixin for resources that can take a list of ids and the lang parameter and then returns 
+    a list of id/name mappings
+    """
+    def get(self, ids=None, lang=None):
         """
-        :param world_id: The world_id for the events
-        :param map_id: The map_id for the events
-        :param event_id: The event_id for the events
-        :return: List of events for the given world_id, map_id, and event_id
+        :param ids: A list of ids to look up
+        :return lang: The language to return, currently supported languages: en, fr, de, es
         """
-
-        return super(Events, self).get(world_id=world_id, map_id=map_id, event_id=event_id)
-
-
-class EventNames(Resource, NameLookupMixin):
-    api_class = 'event_names'
-
-
-class MapNames(Resource, NameLookupMixin):
-    api_class = 'map_names'
-
-
-class WorldNames(Resource, NameLookupMixin):
-    api_class = 'world_names'
-
-
-class Matches(WvWResource, NoParamsMixin):
-    api_class = 'matches'
-    api_return = 'wvw_matches'
-
-
-class MatchDetails(WvWResource):
-    api_class = 'match_details'
-
-    def get(self, match_id):
-        """
-        :param match_id: The match_id to get details for
-        :return: The details for the given match_id
-        """
-
-        return super(MatchDetails, self).get(match_id=match_id)
-
-
-class ObjectiveNames(WvWResource, NameLookupMixin):
-    api_class = 'objective_names'
-
-
-class Items(Resource, NoParamsMixin):
-    api_class = 'items'
-    api_return = True
-
-
-class ItemDetails(Resource):
-    api_class = 'item_details'
-
-    def get(self, item_id, lang=None):
-        """
-        :param item_id: The item_id to get details for
-        :param lang: The language the results will be returned in, supported languages: en, fr, de, es
-        :return: Details about the item for the given item_id
-        """
-        return super(ItemDetails, self).get(item_id=item_id, lang=lang)
-
-
-class Recipes(Resource, NoParamsMixin):
-    api_class = 'recipes'
-    api_return = True
-
-
-class RecipeDetails(Resource):
-    api_class = 'recipe_details'
-
-    def get(self, recipe_id):
-        """
-        :param recipe_id: The recipe_id to get details for
-        :return: The recipe for the given recipe_id
-        """
-        return super(RecipeDetails, self).get(recipe_id=recipe_id)
-
-
-class GuildDetails(Resource):
-    api_class = 'guild_details'
-
-    def get_by_name(self, guild_name):
-        """
-        :param guild_name: The name of the guild to get details for
-        """
-        return super(GuildDetails, self).get(guild_name=guild_name)
-
-    def get_by_id(self, guild_id):
-        """
-        :param guild_id: The id of the guild to get details for
-        """
-        return super(GuildDetails, self).get(guild_id=guild_id)
+        
+        return super(IDsLookupMixin, self).get(ids=ids, lang=lang)
+        

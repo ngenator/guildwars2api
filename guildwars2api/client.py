@@ -1,7 +1,7 @@
 import requests
 
-from guildwars2api.resources import GuildDetails, Events, EventNames, MapNames, WorldNames, Matches, MatchDetails, ObjectiveNames, Items, ItemDetails, Recipes, RecipeDetails
-
+import guildwars2api.api_2 as v2
+import guildwars2api.api_1 as v1
 
 class GuildWars2API(object):
     """
@@ -24,18 +24,35 @@ class GuildWars2API(object):
             'api_version': api_version,
         }
 
-        self.events = self._prepare(Events)
-        self.event_names = self._prepare(EventNames)
-        self.map_names = self._prepare(MapNames)
-        self.world_names = self._prepare(WorldNames)
-        self.matches = self._prepare(Matches)
-        self.match_details = self._prepare(MatchDetails)
-        self.objective_names = self._prepare(ObjectiveNames)
-        self.items = self._prepare(Items)
-        self.item_details = self._prepare(ItemDetails)
-        self.recipes = self._prepare(Recipes)
-        self.recipe_details = self._prepare(RecipeDetails)
-        self.guild_details = self._prepare(GuildDetails)
-
+        if (api_version == 'v2'):
+            self.items = self._prepare(v2.Items)
+            self.recipes = self._prepare(v2.Recipes)
+            self.skins = self._prepare(v2.Skins)
+            self.materials = self._prepare(v2.Materials)
+        elif (api_version =='v1'):
+            self.items = self._prepare(v1.Items)
+            self.recipes = self._prepare(v1.Recipes)
+            self.recipe_details = self._prepare(v1.RecipeDetails)
+            self.item_details = self._prepare(v1.ItemDetails)
+            self.skins = self._prepare(v1.Skins)
+            self.skin_details = self._prepare(v1.Skin_Details)
+            self.matches = self._prepare(v1.Matches)
+            self.match_details = self._prepare(v1.MatchDetails)
+            self.objective_names = self._prepare(v1.ObjectiveNames)
+            self.event_names = self._prepare(v1.EventNames)
+            self.map_names = self._prepare(v1.MapNames)
+            self.world_names = self._prepare(v1.WorldNames)
+            self.guild_details = self._prepare(v1.GuildDetails)
+            self.continents = self._prepare(v1.Continents)
+            self.maps = self._prepare(v1.Maps)
+            self.map_floor = self._prepare(v1.Map_Floor)
+            self.build = self._prepare(v1.Build)
+            self.colors = self._prepare(v1.Colors)
+            self.files = self._prepare(v1.Files)
+            self.event_details = self._prepare(v1.EventDetails)
+        else:
+            raise ValueError("Only v1 or v2 accepted")
+    
     def _prepare(self, resource):
         return resource(self.options, self.session)
+
