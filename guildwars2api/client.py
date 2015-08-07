@@ -1,6 +1,6 @@
 import requests
 
-from guildwars2api.resources import GuildDetails, Events, EventNames, MapNames, WorldNames, Matches, MatchDetails, ObjectiveNames, Items, ItemDetails, Recipes, RecipeDetails
+from guildwars2api.resources import GuildDetails, EventNames, MapNames, WorldNames, Matches, MatchDetails, ObjectiveNames, Items, ItemDetails, Recipes, RecipeDetails
 
 
 class GuildWars2API(object):
@@ -24,7 +24,7 @@ class GuildWars2API(object):
             'api_version': api_version,
         }
 
-        self.events = self._prepare(Events)
+        # self.events = self._prepare(Events)
         self.event_names = self._prepare(EventNames)
         self.map_names = self._prepare(MapNames)
         self.world_names = self._prepare(WorldNames)

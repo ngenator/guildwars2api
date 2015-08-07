@@ -1,6 +1,6 @@
 import logging
 
-from urllib import urlencode
+from urllib.parse import urlencode
 
 
 class GuildWars2APIError(Exception):
@@ -104,19 +104,19 @@ class WvWResource(Resource):
     api_type = 'wvw'
 
 
-class Events(Resource):
-    api_class = 'events'
-    api_return = True
-
-    def get(self, world_id=None, map_id=None, event_id=None):
-        """
-        :param world_id: The world_id for the events
-        :param map_id: The map_id for the events
-        :param event_id: The event_id for the events
-        :return: List of events for the given world_id, map_id, and event_id
-        """
-
-        return super(Events, self).get(world_id=world_id, map_id=map_id, event_id=event_id)
+# class Events(Resource):
+#     api_class = 'events'
+#     api_return = True
+# 
+#     def get(self, world_id=None, map_id=None, event_id=None):
+#         """
+#         :param world_id: The world_id for the events
+#         :param map_id: The map_id for the events
+#         :param event_id: The event_id for the events
+#         :return: List of events for the given world_id, map_id, and event_id
+#         """
+# 
+#         return super(Events, self).get(world_id=world_id, map_id=map_id, event_id=event_id)
 
 
 class EventNames(Resource, NameLookupMixin):
