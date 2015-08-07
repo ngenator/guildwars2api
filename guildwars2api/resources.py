@@ -156,7 +156,17 @@ class Items(Resource, NoParamsMixin):
     api_class = 'items'
     api_return = True
 
-
+class ItemsV2(Resource):
+    api_class = 'items'
+    
+    def get(self, item_id=None, lang=None):
+        """
+        :param item_id: The item_id to get details for
+        :param lang: The language the results will be returned in, supported languages: en, fr, de, es
+        :return: Details about the item for the given item_id
+        """
+        return super(ItemsV2, self).get(item_id=item_id, lang=lang)
+    
 class ItemDetails(Resource):
     api_class = 'item_details'
 
