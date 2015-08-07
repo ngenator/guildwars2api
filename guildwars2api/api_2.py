@@ -36,3 +36,12 @@ class Search(Resource):
         """
         
         return super(Search, self).get(output=item_id)
+    
+class Continents(Resource, IDsLookupMixin):
+    api_class = 'continents'
+    
+    
+class Maps(Resource, IDsLookupMixin):
+    api_class ='Maps'
+    
+    
