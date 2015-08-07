@@ -2,7 +2,7 @@ import requests
 
 from guildwars2api.resources import (GuildDetails, EventNames, MapNames, WorldNames, Matches, MatchDetails, 
                                      ObjectiveNames, Items, ItemDetails, Recipes, RecipeDetails, ItemsV2, 
-                                     RecipesV2, Skins)
+                                     RecipesV2, Skins, Skin_Details)
 
 
 class GuildWars2API(object):
@@ -42,6 +42,7 @@ class GuildWars2API(object):
             self.recipe_details = self._prepare(RecipeDetails)
             self.guild_details = self._prepare(GuildDetails)
             self.skins = self._prepare(Skins)
+            self.skin_details = self._prepare(Skin_Details)
             # self.events = self._prepare(Events)
         else: # Default to v1
             self.items = self._prepare(Items)
@@ -56,6 +57,7 @@ class GuildWars2API(object):
             self.recipe_details = self._prepare(RecipeDetails)
             self.guild_details = self._prepare(GuildDetails)
             self.skins = self._prepare(Skins)
+            self.skin_details = self._prepare(Skin_Details)
             # self.events = self._prepare(Events)
     
     def _prepare(self, resource):

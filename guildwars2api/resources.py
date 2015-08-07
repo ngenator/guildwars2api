@@ -226,3 +226,12 @@ class Skins(Resource, NoParamsMixin):
     api_class = 'skins'
     api_return = True
     
+class Skin_Details(Resource):
+    api_class = 'skin_details'
+    
+    def get(self, skin_id):
+        """
+        :param recipe_id: The skin_id to get details for
+        :return: The skin for the given skin_id
+        """
+        return super(Skin_Details, self).get(skin_id=skin_id)
