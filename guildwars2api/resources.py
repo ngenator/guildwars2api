@@ -5,13 +5,23 @@ from urllib.parse import urlencode
 
 
 class GuildWars2APIError(Exception):
-    pass
+    """
+    Exception upon recieving bad error, usually due to bad url link.
+    'url' is the url that recieved bad data
+    """
+    def __init__(self, url):
+        self.url = url
+    def __str__(self):
+        return repr(self.url)
 
 
-def raise_on_error(data):
+def raise_on_error(data, url):
+    """
+    :param data: data recieved from the Guild Wars 2 api server
+    """
     if 'error' in data:
         text = data.get('text', 'Unknown Error')
-        raise GuildWars2APIError(text)
+        raise GuildWars2APIError(url)
 
 
 class Resource(object):
@@ -25,10 +35,8 @@ class Resource(object):
 
     api_type = None
     api_class = None
-    api_subclass = None
     api_return = None
     url = None
-    
     
     def __init__(self, options, session):
         """
@@ -55,8 +63,8 @@ class Resource(object):
         self.url = self._build_url(**kwargs)
         r = self.session.get(self.url)
         data = r.json()
-        raise_on_error(data)
-
+        raise_on_error(data, self.url)
+        
         if self.api_return is not None and self.api_return in data:
             return data[self.api_return]
         elif self.api_return == True and self.api_class in data:
@@ -69,16 +77,19 @@ class Resource(object):
         """
         Build the correct URL
         """
-
+        # If any keyword arguments are empty, remove from list
+        result = {}
+        result.update((k, v) for k, v in kwargs.items() if v is not None)
+                
+                
         url_data = self.options.copy()
         url_data.update({
             'api_type': '/' if self.api_type is None else '/%s/' % self.api_type,
             'api_resource': self.api_class,
-            'api_subclass': '' if self.api_subclass is None else '/%s' % self.api_subclass,
-            'api_parameters': urlencode(kwargs, safe=","),
+            'api_parameters': urlencode(result, safe=","),
         })
 
-        url = "%(api_server)s/%(api_version)s%(api_type)s%(api_resource)s%(api_subclass)s?%(api_parameters)s" % url_data
+        url = "%(api_server)s/%(api_version)s%(api_type)s%(api_resource)s?%(api_parameters)s" % url_data
         self.logger.debug('url:%s' % url)
 
         return url
@@ -106,9 +117,10 @@ class NoParamsMixin(object):
     def get(self):
         return super(NoParamsMixin, self).get()
 
+
 class IDsLookupMixin(object):
     """
-    Mixin for resources that can take a list of ids and the lang parameter and then returns 
+    Mixin for resources that can take a list of ids or a single ID and the lang parameter and then returns 
     a list of id/name mappings
     """
     def get(self, ids=None, lang=None):
@@ -117,6 +129,17 @@ class IDsLookupMixin(object):
         :param lang: The language to return, currently supported languages: en, fr, de, es
         :return: Either returns a list of ids or detailed info of searched id
         """
-        
+         
         return super(IDsLookupMixin, self).get(ids=ids, lang=lang)
+        
+    def get(self, id=None, lang=None):
+        """
+        :param ids: A list of ids to look up
+        :param lang: The language to return, currently supported languages: en, fr, de, es
+        :return: Either returns a list of ids or detailed info of searched id
+        """
+        
+        return super(IDsLookupMixin, self).get(id=id, lang=lang)
+        
+        
         

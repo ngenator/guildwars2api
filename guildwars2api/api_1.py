@@ -17,18 +17,34 @@ from math import floor
 
 
 class EventNames(Resource, NameLookupMixin):
+    """
+    Returns a list of localized event names.
+    """
+    
     api_class = 'event_names'
 
 
 class MapNames(Resource, NameLookupMixin):
+    """
+    Returns a list of localized map names.
+    """
+    
     api_class = 'map_names'
 
 
 class WorldNames(Resource, NameLookupMixin):
+    """
+    Returns a list of localized world names.
+    """
+    
     api_class = 'world_names'
     
     
 class EventDetails(Resource):
+    """
+    Returns detailed information about events.
+    """
+    
     api_class = 'event_details'
     
     def get(self, event_id=None, lang=None):
