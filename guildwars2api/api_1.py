@@ -17,18 +17,34 @@ from math import floor
 
 
 class EventNames(Resource, NameLookupMixin):
+    """
+    Returns a list of localized event names.
+    """
+    
     api_class = 'event_names'
 
 
 class MapNames(Resource, NameLookupMixin):
+    """
+    Returns a list of localized map names.
+    """
+    
     api_class = 'map_names'
 
 
 class WorldNames(Resource, NameLookupMixin):
+    """
+    Returns a list of localized world names.
+    """
+    
     api_class = 'world_names'
     
     
 class EventDetails(Resource):
+    """
+    Returns detailed information about events.
+    """
+    
     api_class = 'event_details'
     
     def get(self, event_id=None, lang=None):
@@ -151,7 +167,7 @@ class Map_Floor(Resource):
     def get(self, continent_id, floor, lang=None):
         """
         :param continent_id: The continent_id to get details for
-        :floor floor: The floor of the continenet to get details for
+        :floor floor: The floor of the continent to get details for
         :param lang: The language the results will be returned in, supported languages: en, fr, de, es
         :return: The details of the map floor.
         """

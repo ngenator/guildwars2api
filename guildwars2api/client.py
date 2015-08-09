@@ -17,18 +17,24 @@ class GuildWars2API(object):
         :param api_version: The Guild Wars 2 API Version
         """
 
+        # The settings of the object
         self.session = requests.Session()
         self.session.headers.update({'User-Agent': 'Guild Wars 2 Python API Wrapper', 'Accept': 'application/json'})
         self.options = {
             'api_server': api_server,
             'api_version': api_version,
         }
-
+        
+        # Loads the specified API resource
         if (api_version == 'v2'):
             self.items = self._prepare(v2.Items)
             self.recipes = self._prepare(v2.Recipes)
             self.skins = self._prepare(v2.Skins)
             self.materials = self._prepare(v2.Materials)
+            self.search = self._prepare(v2.Search)
+            self.maps = self._prepare(v2.Maps)
+            self.continents = self._prepare(v2.Continents)
+            self.continents.floors = self._prepare(v2.Continents.Floors)
         elif (api_version =='v1'):
             self.items = self._prepare(v1.Items)
             self.recipes = self._prepare(v1.Recipes)
@@ -54,5 +60,9 @@ class GuildWars2API(object):
             raise ValueError("Only v1 or v2 accepted")
     
     def _prepare(self, resource):
+        """
+        Intializes the resource using the settings supplied
+        """
+        
         return resource(self.options, self.session)
 

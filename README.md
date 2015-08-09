@@ -15,11 +15,7 @@ import random
 
 from guildwars2api.client import GuildWars2API
 
-api = GuildWars2API()
-
-# Get a list of events on a world
-events = api.events.get(world_id=1001)
-print "events", len(events)
+api = GuildWars2API(api_version=v1)
 
 # Get the list of event names
 event_names = api.event_names.get(lang="en")
