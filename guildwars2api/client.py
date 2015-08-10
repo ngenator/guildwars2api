@@ -35,6 +35,12 @@ class GuildWars2API(object):
             self.maps = self._prepare(v2.Maps)
             self.continents = self._prepare(v2.Continents)
             self.continents.floors = self._prepare(v2.Continents.Floors)
+            self.continents.floors = self._prepare(v2.Continents.Floors)
+            self.continents.floors.regions = self._prepare(v2.Continents.Floors.Regions)
+            self.continents.floors.regions.maps = self._prepare(v2.Continents.Floors.Regions.Maps)
+            self.continents.floors.regions.maps.pois = self._prepare(v2.Continents.Floors.Regions.Maps.Subresource, "pois")
+            self.continents.floors.regions.maps.sectors = self._prepare(v2.Continents.Floors.Regions.Maps.Subresource, "sectors")
+            self.continents.floors.regions.maps.tasks = self._prepare(v2.Continents.Floors.Regions.Maps.Subresource, "tasks")
         elif (api_version =='v1'):
             self.items = self._prepare(v1.Items)
             self.recipes = self._prepare(v1.Recipes)
@@ -59,10 +65,12 @@ class GuildWars2API(object):
         else:
             raise ValueError("Only v1 or v2 accepted")
     
-    def _prepare(self, resource):
+    def _prepare(self, resource, subresource_name=None):
         """
         Intializes the resource using the settings supplied
         """
-        
+        if subresource_name is not None:
+            return resource(self.options, self.session, subresource_name)
         return resource(self.options, self.session)
+
 
