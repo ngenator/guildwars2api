@@ -36,12 +36,14 @@ print "matches", len(matches)
 # Get the details for a random match
 match_details = api.match_details.get(random.choice(matches)['wvw_match_id'])
 print "match details", match_details
-```
 
 api = GuildWars2API(api_version=v2)
 
 # Get the details of a tasks on a map using the continent_id, floor_id, region_id, map_id and task_id
 tasks = api.continents.floors.regions.maps.tasks.get(1, 1, 1, 26, 554) 
+
+```
+
 
 #### LICENSE
 
