@@ -41,6 +41,8 @@ class GuildWars2API(object):
             self.continents.floors.regions.maps.pois = self._prepare(v2.Continents.Floors.Regions.Maps.Subresource, "pois")
             self.continents.floors.regions.maps.sectors = self._prepare(v2.Continents.Floors.Regions.Maps.Subresource, "sectors")
             self.continents.floors.regions.maps.tasks = self._prepare(v2.Continents.Floors.Regions.Maps.Subresource, "tasks")
+            self.build = self._prepare(v2.Build)
+            self.colors =self._prepare(v2.Colors)
         elif (api_version =='v1'):
             self.items = self._prepare(v1.Items)
             self.recipes = self._prepare(v1.Recipes)

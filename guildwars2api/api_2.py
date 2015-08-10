@@ -1,4 +1,4 @@
-from guildwars2api.resources import Resource, IDsLookupMixin
+from guildwars2api.resources import Resource, IDsLookupMixin, NoParamsMixin, IDAllMixin
 from requests import sessions
 
 
@@ -157,5 +157,13 @@ class Continents(Resource, IDsLookupMixin, IDAllMixin):
                 
 class Maps(Resource, IDsLookupMixin):
     api_class ='maps'
+    
+    
+class Build(Resource, NoParamsMixin):
+    api_class = 'build'
+    
+    
+class Colors(Resource, IDsLookupMixin):
+    api_class = 'colors'
     
     
