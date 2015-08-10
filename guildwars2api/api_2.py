@@ -3,22 +3,42 @@ from requests import sessions
 
 
 class Skins(Resource, IDsLookupMixin):
+    """
+    Returns information about skins
+    """
+    
     api_class = 'skins'
     
     
 class Recipes(Resource, IDsLookupMixin):
+    """
+    Returns information about recipes
+    """
+    
     api_class = 'recipes'
     
 
 class Items(Resource, IDsLookupMixin):
+    """
+    Returns information about items
+    """
+    
     api_class = 'items'
     
     
 class Materials(Resource, IDsLookupMixin):
+    """
+    Returns information about materials
+    """
+    
     api_class = 'materials'
     
     
 class Search(Resource):
+    """
+    A search interface for recipes
+    """
+    
     api_type = 'recipes'
     api_class = 'search'
     
@@ -40,6 +60,7 @@ class Search(Resource):
     
 class Continents(Resource, IDsLookupMixin, IDAllMixin):
     """
+    Returns a list of continents and information about each continent
     'floors' each continent contains a list of floors.
     """
     
@@ -48,6 +69,7 @@ class Continents(Resource, IDsLookupMixin, IDAllMixin):
     
     class Floors(Resource, IDsLookupMixin, IDAllMixin):
         """
+        Returns a list of floors and information about each floor
         'regions' each floor level contains a list of regions
         """
         
@@ -71,6 +93,7 @@ class Continents(Resource, IDsLookupMixin, IDAllMixin):
         
         class Regions(Resource, IDsLookupMixin, IDAllMixin):
             """
+            Returns a list of regions and information about each regions
             'maps' each region level contains a list of maps
             """
             
@@ -94,6 +117,7 @@ class Continents(Resource, IDsLookupMixin, IDAllMixin):
             
             class Maps(Resource, IDsLookupMixin, IDAllMixin):
                 """
+                Returns a list of maps and information about each map
                 'sectors' each map level contains a list of sectors
                 'pois' each map level contains a list of pois
                 'tasks' each map level contains a list of tasks
@@ -125,6 +149,7 @@ class Continents(Resource, IDsLookupMixin, IDAllMixin):
                 
                 class Subresource(Resource, IDsLookupMixin, IDAllMixin):
                     """
+                    Returns a list of choosen resource and information about each resource
                     Used to create the 3 sub-resources of maps: sectors, pois and tasks
                     """
                 
@@ -156,14 +181,29 @@ class Continents(Resource, IDsLookupMixin, IDAllMixin):
                 
                 
 class Maps(Resource, IDsLookupMixin):
+    """
+    Returns information about maps in the game
+    """
     api_class ='maps'
     
     
 class Build(Resource, NoParamsMixin):
+    """
+    Returns the current build id
+    """
     api_class = 'build'
     
     
 class Colors(Resource, IDsLookupMixin):
+    """
+    Returns information about dye colors
+    """
     api_class = 'colors'
     
+    
+class Files(Resource, NoParamsMixin):
+    """
+    Returns commonly requested assets
+    """
+    api_class = 'files'
     
