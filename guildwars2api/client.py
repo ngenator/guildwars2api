@@ -44,6 +44,7 @@ class GuildWars2API(object):
             self.build = self._prepare(v2.Build)
             self.colors = self._prepare(v2.Colors)
             self.files = self._prepare(v2.Files)
+            self.specializations = self._prepare(v2.Specializations)
         elif (api_version =='v1'):
             self.items = self._prepare(v1.Items)
             self.recipes = self._prepare(v1.Recipes)

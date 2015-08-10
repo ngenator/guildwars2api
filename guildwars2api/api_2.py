@@ -184,6 +184,7 @@ class Maps(Resource, IDsLookupMixin):
     """
     Returns information about maps in the game
     """
+    
     api_class ='maps'
     
     
@@ -191,6 +192,7 @@ class Build(Resource, NoParamsMixin):
     """
     Returns the current build id
     """
+    
     api_class = 'build'
     
     
@@ -198,6 +200,7 @@ class Colors(Resource, IDsLookupMixin):
     """
     Returns information about dye colors
     """
+    
     api_class = 'colors'
     
     
@@ -205,5 +208,13 @@ class Files(Resource, NoParamsMixin):
     """
     Returns commonly requested assets
     """
+    
     api_class = 'files'
+    
+class Specializations(Resource, IDsLookupMixin):
+    """
+    This resource returns information on currently released specializations. 
+    """
+    
+    api_class = 'specializations'
     
