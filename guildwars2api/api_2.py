@@ -38,17 +38,17 @@ class Search(Resource):
         
         return super(Search, self).get(output=item_id)
     
-class Continents(Resource, IDsLookupMixin):
+class Continents(Resource, IDsLookupMixin, IDAllMixin):
     """
-        'floors' each continent contains a layer of floors.
+    'floors' each continent contains a list of floors.
     """
     
     api_class = 'continents'
     floors = None
     
-    class Floors(Resource, IDsLookupMixin):
+    class Floors(Resource, IDsLookupMixin, IDAllMixin):
         """
-        
+        'regions' each floor level contains a list of regions
         """
         
         api_type = 'continents'
@@ -58,23 +58,20 @@ class Continents(Resource, IDsLookupMixin):
         
         def get(self, continent_id, floor_ids=None, lang=None):
             """
-            :
+            :param continent_id: the continent_id used to search for the given floor_id
+            :param floor_id: the floor_id used to search for the given region_id
+            :param lang: The language the results will be returned in, supported 
+                        languages: en, fr, de, es
+            :return: either a list of valid floor_ids or detailed info of given floor_ids
             """
+            
             self.api_type = 'continents/' + str(continent_id)
             return super(Continents.Floors, self).get(ids=floor_ids, lang=lang)
         
         
-        def get_all(self):
+        class Regions(Resource, IDsLookupMixin, IDAllMixin):
             """
-            :return: All continents of the Guild Wars universe
-            """
-        
-            return super(Continents, self).get(ids="all")
-        
-        
-        class Regions(Resource, IDsLookupMixin):
-            """
-            
+            'maps' each region level contains a list of maps
             """
             
             api_type = 'continents'
@@ -84,15 +81,22 @@ class Continents(Resource, IDsLookupMixin):
             
             def get(self, continent_id, floor_id, region_ids=None, lang=None):
                 """
-                :
+                :param continent_id: the continent_id used to search for the given floor_id
+                :param floor_id: the floor_id used to search for the given region_id
+                :param region_id: the region_id used to search for the given map_ids
+                :param lang: The language the results will be returned in, supported 
+                            languages: en, fr, de, es
+                :return: either a list of valid region_ids or detailed info of given region_ids
                 """
                 self.api_type = 'continents/' + str(continent_id) + '/floors/' + str(floor_id)
                 return super(Continents.Floors.Regions, self).get(ids=region_ids, lang=lang)
             
             
-            class Maps(Resource, IDsLookupMixin):
+            class Maps(Resource, IDsLookupMixin, IDAllMixin):
                 """
-                
+                'sectors' each map level contains a list of sectors
+                'pois' each map level contains a list of pois
+                'tasks' each map level contains a list of tasks
                 """
                 api_type = 'continents'
                 api_class = 'maps'
@@ -104,16 +108,24 @@ class Continents(Resource, IDsLookupMixin):
                 
                 def get(self, continent_id, floor_id, region_id, map_ids=None, lang=None):
                     """
-                    :
+                    :param continent_id: the continent_id used to search for the given floor_id
+                    :param floor_id: the floor_id used to search for the given region_id
+                    :param region_id: the region_id used to search for the given map_ids
+                    :param map_ids: the map_ids to search for on the current region layer. If
+                                no map_ids are given, a list of valid map_ids are given
+                    :param lang: The language the results will be returned in, supported 
+                                languages: en, fr, de, es
+                    :return: either a list of valid map_ids or detailed info of given map_ids
                     """
+                    
                     self.api_type = ('continents/' + str(continent_id) + '/floors/' + 
                                      str(floor_id) + '/regions/' + str(region_id))
                     return super(Continents.Floors.Regions.Maps, self).get(ids=map_ids, lang=lang)
                 
                 
-                class Subresource(Resource, IDsLookupMixin):
+                class Subresource(Resource, IDsLookupMixin, IDAllMixin):
                     """
-                    
+                    Used to create the 3 sub-resources of maps: sectors, pois and tasks
                     """
                 
                     api_type = 'continents'
@@ -127,8 +139,16 @@ class Continents(Resource, IDsLookupMixin):
                         
                     def get(self, continent_id, floor_id, region_id, map_id, ids=None, lang=None):
                         """
-                        :
+                        :param continent_id: the continent_id used to search for the given floor_id
+                        :param floor_id: the floor_id used to search for the given region_id
+                        :param region_id: the region_id used to search for the given map_ids
+                        :param map_ids: the map_id used to search for the given subresource
+                        :param lang: The language the results will be returned in, supported 
+                                    languages: en, fr, de, es
+                        :return: either a list of valid subresource_ids or detailed information of given
+                                subresource_ids
                         """
+                        
                         self.api_type = ('continents/' + str(continent_id) + '/floors/' + 
                                      str(floor_id) + '/regions/' + str(region_id) + '/'  + '/maps/' + str(map_id))
                         return super(Continents.Floors.Regions.Maps.Subresource, self).get(ids=ids, lang=lang)
