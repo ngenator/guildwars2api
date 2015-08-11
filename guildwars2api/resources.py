@@ -142,4 +142,14 @@ class IDsLookupMixin(object):
         return super(IDsLookupMixin, self).get(id=id, lang=lang)
         
         
-        
+class IDAllMixin(object):
+    """
+    Mixin for resources that can take 'all' as an parameter to return all items in the resource
+    """
+    def get_all(self):
+        """
+        :return: All continents of the Guild Wars universe
+        """
+    
+        return super(IDAllMixin, self).get(ids="all")
+    
